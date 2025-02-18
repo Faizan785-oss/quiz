@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India GK Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options label {
+            display: block;
+            margin: 5px 0;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>India General Knowledge Quiz</h1>
+        <div id="quiz"></div>
+        <button id="submit">Submit Quiz</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        const quizData = [
+            {
+                question: "1. What is the capital of India?",
+                options: ["Mumbai", "New Delhi", "Kolkata", "Chennai"],
+                answer: "New Delhi"
+            },
+            {
+                question: "2. Which river is known as the 'Ganga of the South'?",
+                options: ["Godavari", "Krishna", "Kaveri", "Narmada"],
+                answer: "Kaveri"
+            },
+            {
+                question: "3. Who was the first Prime Minister of India?",
+                options: ["Jawaharlal Nehru", "Indira Gandhi", "Rajiv Gandhi", "Lal Bahadur Shastri"],
+                answer: "Jawaharlal Nehru"
+            },
+            {
+                question: "4. Which is the largest state in India by area?",
+                options: ["Rajasthan", "Madhya Pradesh", "Maharashtra", "Uttar Pradesh"],
+                answer: "Rajasthan"
+            },
+            {
+                question: "5. The Indian National Congress was founded by:",
+                options: ["Mahatma Gandhi", "Jawaharlal Nehru", "A.O. Hume", "B.R. Ambedkar"],
+                answer: "A.O. Hume"
+            },
+            {
+                question: "6. Which monument is called the 'Symbol of Love'?",
+                options: ["Red Fort", "Qutub Minar", "Taj Mahal", "India Gate"],
+                answer: "Taj Mahal"
+            },
+            {
+                question: "7. The highest civilian award in India is:",
+                options: ["Padma Shri", "Padma Bhushan", "Padma Vibhushan", "Bharat Ratna"],
+                answer: "Bharat Ratna"
+            },
+            {
+                question: "8. Which Indian state has the longest coastline?",
+                options: ["Gujarat", "Tamil Nadu", "Andhra Pradesh", "Kerala"],
+                answer: "Gujarat"
+            },
+            {
+                question: "9. The national animal of India is:",
+                options: ["Lion", "Elephant", "Tiger", "Leopard"],
+                answer: "Tiger"
+            },
+            {
+                question: "10. Who wrote the Indian National Anthem?",
+                options: ["Rabindranath Tagore", "Bankim Chandra Chattopadhyay", "Sarojini Naidu", "Subramania Bharati"],
+                answer: "Rabindranath Tagore"
+            },
+            {
+                question: "11. Which is the smallest state in India by area?",
+                options: ["Goa", "Sikkim", "Tripura", "Mizoram"],
+                answer: "Goa"
+            },
+            {
+                question: "12. The battle of Plassey was fought in which year?",
+                options: ["1757", "1857", "1775", "1875"],
+                answer: "1757"
+            },
+            {
+                question: "13. Which Indian city is known as the 'Silicon Valley of India'?",
+                options: ["Hyderabad", "Bangalore", "Pune", "Chennai"],
+                answer: "Bangalore"
+            },
+            {
+                question: "14. The famous 'Gateway of India' is located in:",
+                options: ["Mumbai", "Chennai", "Kolkata", "Delhi"],
+                answer: "Mumbai"
+            },
+            {
+                question: "15. Who is known as the 'Iron Man of India'?",
+                options: ["Mahatma Gandhi", "Jawaharlal Nehru", "Sardar Vallabhbhai Patel", "Subhas Chandra Bose"],
+                answer: "Sardar Vallabhbhai Patel"
+            },
+            {
+                question: "16. The Indian currency symbol (₹) was designed by:",
+                options: ["RBI", "D. Udaya Kumar", "Narendra Modi", "Manmohan Singh"],
+                answer: "D. Udaya Kumar"
+            },
+            {
+                question: "17. Which Indian state is the largest producer of tea?",
+                options: ["Assam", "West Bengal", "Kerala", "Tamil Nadu"],
+                answer: "Assam"
+            },
+            {
+                question: "18. The first woman President of India was:",
+                options: ["Pratibha Patil", "Indira Gandhi", "Sonia Gandhi", "Meira Kumar"],
+                answer: "Pratibha Patil"
+            },
+            {
+                question: "19. Which is the most spoken language in India?",
+                options: ["Hindi", "English", "Bengali", "Tamil"],
+                answer: "Hindi"
+            },
+            {
+                question: "20. The Indian Constitution came into effect on:",
+                options: ["15th August 1947", "26th January 1950", "26th November 1949", "14th April 1947"],
+                answer: "26th January 1950"
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz');
+        const submitButton = document.getElementById('submit');
+        const resultContainer = document.getElementById('result');
+
+        function buildQuiz() {
+            const output = [];
+            quizData.forEach((currentQuestion, questionNumber) => {
+                const options = [];
+                currentQuestion.options.forEach(option => {
+                    options.push(
+                        `<label><input type="radio" name="question${questionNumber}" value="${option}"> ${option}</label>`
+                    );
+                });
+                output.push(
+                    `<div class="question">${currentQuestion.question}</div>
+                     <div class="options">${options.join('')}</div>`
+                );
+            });
+            quizContainer.innerHTML = output.join('');
+        }
+
+        function showResults() {
+            const answerContainers = quizContainer.querySelectorAll('.options');
+            let numCorrect = 0;
+
+            quizData.forEach((currentQuestion, questionNumber) => {
+                const answerContainer = answerContainers[questionNumber];
+                const selector = `input[name=question${questionNumber}]:checked`;
+                const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+
+                if (userAnswer === currentQuestion.answer) {
+                    numCorrect++;
+                }
+            });
+
+            resultContainer.innerHTML = `You scored ${numCorrect} out of ${quizData.length}!`;
+        }
+
+        buildQuiz();
+        submitButton.addEventListener('click', showResults);
+    </script>
+</body>
+</html>
